@@ -2,6 +2,8 @@ import Question from "@/components/page-comps/faq comps/Question";
 import Link from "next/link";
 import React from "react";
 
+export const dynamic = "force-dynamic";
+
 const fetchFaqs = async () => {
   const res = await fetch("http://localhost:3000/api/faqs/get-all");
   const data = await res.json();
