@@ -10,7 +10,7 @@ interface RootLayoutProps {
 }
 
 export const metadata = {
-  title: "My App",
+  title: "Ticketing App",
   description: "A basic Next.js app",
 };
 

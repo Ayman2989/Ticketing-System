@@ -45,30 +45,40 @@ export const UserContext = createContext<UserContextType>({
 
 export const UserProvider: React.FC<userProviderProps> = ({ children }) => {
   const router = useRouter();
-  const [userInfo, setUserInfo] = useState<userInfo>(() => {
-    // Load user data from localStorage if it exists
-    const storedUser = localStorage.getItem("userInfo");
-    return storedUser
-      ? JSON.parse(storedUser)
-      : {
-          employee_id: "",
-          employee_name: "",
-          email: "",
-          password: "",
-          role: "",
-          contact_number: undefined,
-          designation: "",
-          status: "",
-        };
+
+  const [userInfo, setUserInfo] = useState<userInfo>({
+    employee_id: "",
+    employee_name: "",
+    email: "",
+    password: "",
+    role: "",
+    contact_number: undefined,
+    designation: "",
+    status: "",
   });
+
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+
+  // 🧠 Only access localStorage in the browser
   useEffect(() => {
-    if (userInfo.employee_id) {
-      localStorage.setItem("userInfo", JSON.stringify(userInfo));
-    } else {
-      localStorage.removeItem("userInfo"); // Clear storage on logout
+    if (typeof window !== "undefined") {
+      const storedUser = localStorage.getItem("userInfo");
+      if (storedUser) {
+        setUserInfo(JSON.parse(storedUser));
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (userInfo.employee_id) {
+        localStorage.setItem("userInfo", JSON.stringify(userInfo));
+      } else {
+        localStorage.removeItem("userInfo"); // Clear storage on logout
+      }
     }
   }, [userInfo]);
+
   const logout = () => {
     setIsAuthenticated(false);
     setUserInfo({
@@ -81,9 +91,11 @@ export const UserProvider: React.FC<userProviderProps> = ({ children }) => {
       designation: "",
       status: "",
     });
-    localStorage.removeItem("userInfo");
-    router.push("/login");
-    window.location.reload();
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("userInfo");
+      router.push("/login");
+      window.location.reload();
+    }
   };
 
   return (
