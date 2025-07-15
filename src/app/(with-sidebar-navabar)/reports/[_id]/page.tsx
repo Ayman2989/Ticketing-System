@@ -1,9 +1,12 @@
 import { Suspense } from "react";
 
 const fetchReports = async (_id: string) => {
-  const res = await fetch(`http://localhost:3000/api/reports/${_id}`, {
-    cache: "no-store", // Disable caching
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SITE_URL}/api/reports/${_id}`,
+    {
+      cache: "no-store", // Disable caching
+    }
+  );
 
   if (!res.ok) {
     throw new Error("Failed to fetch reports");

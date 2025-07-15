@@ -2,9 +2,12 @@ import DeleteButton from "@/components/action-button/DeleteButton";
 import Link from "next/link";
 
 async function fetchIssue(_id: string) {
-  const res = await fetch(`http://localhost:3000/api/issues/${_id}`, {
-    next: { revalidate: 60 }, // Revalidate every 60 seconds
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SITE_URL}/api/issues/${_id}`,
+    {
+      next: { revalidate: 60 }, // Revalidate every 60 seconds
+    }
+  );
   if (!res.ok) {
     throw new Error("Failed to fetch issue data");
   }

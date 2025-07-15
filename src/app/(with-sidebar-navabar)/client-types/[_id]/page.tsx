@@ -4,9 +4,12 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 async function fetchClientType(_id: string) {
-  const res = await fetch(`http://localhost:3000/api/client-types/${_id}`, {
-    next: { revalidate: 60 }, // Revalidate every 60 seconds
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SITE_URL}/api/client-types/${_id}`,
+    {
+      next: { revalidate: 60 }, // Revalidate every 60 seconds
+    }
+  );
   if (!res.ok) {
     throw new Error("Failed to fetch client-type data");
   }

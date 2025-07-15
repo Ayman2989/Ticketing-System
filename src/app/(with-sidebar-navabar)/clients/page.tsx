@@ -20,9 +20,7 @@ const page = () => {
   useEffect(() => {
     const fetchClients = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:3000/api/clients/get-all"
-        );
+        const response = await fetch(`api/clients/get-all`);
         const data = await response.json();
         setClients(data.clients);
       } catch (error) {

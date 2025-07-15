@@ -2,9 +2,12 @@ import DeleteButton from "@/components/action-button/DeleteButton";
 import Link from "next/link";
 
 async function fetchUser(_id: string) {
-  const res = await fetch(`http://localhost:3000/api/users/${_id}`, {
-    next: { revalidate: 60 }, // Revalidate every 60 seconds
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SITE_URL}/api/users/${_id}`,
+    {
+      next: { revalidate: 60 }, // Revalidate every 60 seconds
+    }
+  );
   if (!res.ok) {
     throw new Error("Failed to fetch user data");
   }

@@ -3,9 +3,12 @@ import TicketTransfer from "@/components/page-comps/ticket-comps/TicketTransfer"
 import Link from "next/link";
 
 async function fetchTicket(_id: string) {
-  const res = await fetch(`http://localhost:3000/api/tickets/${_id}`, {
-    next: { revalidate: 20 }, // Revalidate every 20 seconds
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SITE_URL}/api/tickets/${_id}`,
+    {
+      next: { revalidate: 20 }, // Revalidate every 20 seconds
+    }
+  );
   if (!res.ok) {
     throw new Error("Failed to fetch user data");
   }
