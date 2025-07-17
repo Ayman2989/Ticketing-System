@@ -34,6 +34,10 @@ export default function LoginPage() {
     password: false,
   });
 
+  useEffect(() => {
+    alert("Demo Login:\nEmail: test@gmail.com\nPassword: Test123");
+  }, []);
+
   const isFieldInvalid = (fieldName: keyof typeof formData) => {
     return touchedFields[fieldName] && !formData[fieldName];
   };
